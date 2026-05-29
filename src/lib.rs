@@ -78,27 +78,27 @@ utxos
 
 /// Find the first transaction with a fee greater than 0.005 BTC.
 pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
-    // TODO: Iterate with enumerate and return the first (index, fee) where fee > 0.005
-    todo!()
-}
+    fee_list.iter().enumerate().find(|(_, fee)| **fee > 0.005).map(|(i, fee)| (i, *fee))
+}//**
+//enumerate() gives you (index, value). The double **fee dereferences through the iterator and the slice. .map() converts the found reference into an owned value.
 
 /// Return basic wallet details as a tuple of (name, balance).
 pub fn get_wallet_details() -> (String, f64) {
-    // TODO: Return a tuple with wallet name and balance
-    todo!()
+   ("Louis_wallet".to_string(),12)
+   
 }
 
 /// Get the status of a transaction from the mempool or "not found".
 pub fn get_tx_status(tx_pool: &HashMap<String, String>, txid: &str) -> String {
-    // TODO: Look up txid in tx_pool, returning the status or "not found"
-    todo!()
-}
+ tx_pool.get(txid).cloned().unwrap_or_else(|| "not found".to_string())
+}//**
 
 /// Destructure wallet_info and format a status string.
 pub fn unpack_wallet_info(wallet_info: (String, f64)) -> String {
     // TODO: Destructure the tuple into (name, balance) and format the result
     // Expected format: "Wallet <name> has balance: <balance> BTC"
-    todo!()
+   let (name, balance) = wallet_info;
+    format!("Wallet {} has balance: {} BTC", name, balance as u64)
 }
 
 /// Convert BTC to satoshis (1 BTC = 100,000,000 sats).
