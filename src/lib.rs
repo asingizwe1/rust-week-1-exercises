@@ -29,15 +29,16 @@ pub fn is_valid_tx_fee(fee: f64) -> bool {
 
 /// Return true if the wallet balance is greater than 50.0 BTC.
 pub fn is_large_balance(balance: f64) -> bool {
-    // TODO: Compare balance to 50.0 and return result
-    todo!()
+ balance > 50.0
+ //since its a float the decimals are key
+
 }
 
 /// Return the priority of a transaction ("high", "medium", "low") based on fee rate.
 pub fn tx_priority(size_bytes: u64, fee_btc: f64) -> &'static str {
     // TODO: Calculate fee rate (fee_btc / size_bytes) and use if/else if/else
     // High: > 0.00005, Medium: > 0.00001, otherwise Low
-    todo!()
+    
 }
 
 /// Return true if the network string equals "mainnet" (case-insensitive).
