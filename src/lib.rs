@@ -17,16 +17,14 @@ pub struct Utxo {
 
 /// Calculate the total Bitcoin reward for a given number of mined blocks.
 pub fn calculate_total_reward(blocks_mined: u64) -> f64 {
-    // multiply blocks mined by reward per block
-    //cast the type of u64 to f64 using as key word
+    //casting the type of u64 to f64 using as key word
     let result = blocks_mined as f64 * MINING_REWARD;
     return result;
-} //blocks_mined as f64 * MINING_REWARD this could also return a value which is f64. without a full colon it will be an expression returning a value
+} //blocks_mined as f64 * MINING_REWARD could also return a value which is f64. without a full colon it will be an expression returning a value
 
 /// Return true if the transaction fee is between 0.00001 and 0.01 BTC.
 pub fn is_valid_tx_fee(fee: f64) -> bool {
-    // TODO: Check if fee is between 0.00001 and 0.01 BTC (inclusive)
-    todo!()
+    fee >= && 0.00001  fee <= 0.01
 }
 
 /// Return true if the wallet balance is greater than 50.0 BTC.
