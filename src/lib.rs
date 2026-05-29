@@ -24,87 +24,93 @@ pub fn calculate_total_reward(blocks_mined: u64) -> f64 {
 
 /// Return true if the transaction fee is between 0.00001 and 0.01 BTC.
 pub fn is_valid_tx_fee(fee: f64) -> bool {
-    fee >= && 0.00001  fee <= 0.01
+    fee >= 0.00001 && fee <= 0.01
 }
 
 /// Return true if the wallet balance is greater than 50.0 BTC.
 pub fn is_large_balance(balance: f64) -> bool {
- balance > 50.0
- //since its a float the decimals are key
-
+    balance > 50.0
+    //since its a float the decimals are key
 }
 
 /// Return the priority of a transaction ("high", "medium", "low") based on fee rate.
 pub fn tx_priority(size_bytes: u64, fee_btc: f64) -> &'static str {
     // TODO: Calculate fee rate (fee_btc / size_bytes) and use if/else if/else
     // High: > 0.00005, Medium: > 0.00001, otherwise Low
- let rate_fee = fee_btc / size_bytes;
-if rate_fee > 0.00005 {println!("High")}
-else if rate_fee > 0.00001 {println!("Medium")}
-else rate_fee {println!("Low")}
-
+    let fee_rate = fee_btc / size_bytes as f64;
+    if fee_rate > 0.00005 {
+        "high"
+    } else if fee_rate > 0.00001 {
+        "medium"
+    } else {
+        "low"
+    }
 }
 
 /// Return true if the network string equals "mainnet" (case-insensitive).
 pub fn is_mainnet(network: &str) -> bool {
     //s = "mainnet" -> borrowed string slice (&str).
-network.to_lowercase =="mainnet"
-
+    network.to_lowercase == "mainnet"
 }
 
 /// Return true if value is in the inclusive range 100..=200.
 pub fn is_in_range(value: i64) -> bool {
-     //for value in 100..=200 true -> loops don’t return values
-     value>=100 &&  value<=200
-}//(100..=200).contains(&value) because the contains function expects a pointer
+    //for value in 100..=200 true -> loops don’t return values
+    value >= 100 && value <= 200
+} //(100..=200).contains(&value) because the contains function expects a pointer
 
 /// Return true if both references point to the exact same object in memory.
 pub fn is_same_wallet<T>(wallet1: &T, wallet2: &T) -> bool {
-  std::ptr::eq(wallet1,wallet2) //two raw pointers point to the exact same memory address.
+    std::ptr::eq(wallet1, wallet2) //two raw pointers point to the exact same memory address.
 }
 
 /// Normalize a Bitcoin address by trimming whitespace and lowercasing.
 pub fn normalize_address(address: &str) -> String {
-  
-address.trim().to_lowercase()
-
+    address.trim().to_lowercase()
 }
 
 /// Append a new UTXO to the list and return the updated list.
-pub fn add_utxo(mut utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {//adding mut to be able to modify
-utxos.push(new_utxo);
-utxos
+pub fn add_utxo(mut utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {
+    //adding mut to be able to modify
+    utxos.push(new_utxo);
+    utxos
 }
 
 /// Find the first transaction with a fee greater than 0.005 BTC.
 pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
-    fee_list.iter().enumerate().find(|(_, fee)| **fee > 0.005).map(|(i, fee)| (i, *fee))
-}//**
-//enumerate() gives you (index, value). The double **fee dereferences through the iterator and the slice. .map() converts the found reference into an owned value.
+    fee_list
+        .iter()
+        .enumerate()
+        .find(|(_, fee)| **fee > 0.005)
+        .map(|(i, fee)| (i, *fee))
+} //**
+  //enumerate() gives you (index, value). The double **fee dereferences through the iterator and the slice. .map() converts the found reference into an owned value.
 
 /// Return basic wallet details as a tuple of (name, balance).
 pub fn get_wallet_details() -> (String, f64) {
-   ("Louis_wallet".to_string(),12)
-   
+    ("Louis_wallet".to_string(), 12)
 }
 
 /// Get the status of a transaction from the mempool or "not found".
 pub fn get_tx_status(tx_pool: &HashMap<String, String>, txid: &str) -> String {
- tx_pool.get(txid).cloned().unwrap_or_else(|| "not found".to_string())
-}//**
+    tx_pool
+        .get(txid)
+        .cloned()
+        .unwrap_or_else(|| "not found".to_string())
+} //**
 
 /// Destructure wallet_info and format a status string.
 pub fn unpack_wallet_info(wallet_info: (String, f64)) -> String {
     // TODO: Destructure the tuple into (name, balance) and format the result
     // Expected format: "Wallet <name> has balance: <balance> BTC"
-   let (name, balance) = wallet_info;
+    let (name, balance) = wallet_info;
     format!("Wallet {} has balance: {} BTC", name, balance as u64)
 }
 
 /// Convert BTC to satoshis (1 BTC = 100,000,000 sats).
 pub fn calculate_sats(btc: f64) -> u64 {
     // TODO: Multiply btc by BTC_TO_SATS and return as u64
-  (btc * BTC_TO_SATS as f64) as u64
+    (btc * BTC_TO_SATS as f64) as u64
 }
 
 /// Generate a mock Bitcoin address of length 32 with the given prefix.
@@ -147,7 +153,7 @@ pub fn halving_schedule(blocks: &[u64]) -> HashMap<u64, u64> {
         result.insert(block, reward);
     }
     result
-}//shifting by 1 halves the value, so >> halvings applies all halvings at once.
+} //shifting by 1 halves the value, so >> halvings applies all halvings at once.
 
 /// Find the UTXO with the smallest value that meets or exceeds target.
 pub fn find_utxo_with_min_value(utxos: &[Utxo], target: u64) -> Option<Utxo> {
@@ -168,7 +174,7 @@ pub fn create_utxo(
 ) -> HashMap<String, String> {
     // TODO: Build a base map with "txid" and "vout" (as string)
     // TODO: Merge extra into the base map and return
-     let mut map = HashMap::new();
+    let mut map = HashMap::new();
     map.insert("txid".to_string(), txid.to_string());
     map.insert("vout".to_string(), vout.to_string());
     for (k, v) in extra {
