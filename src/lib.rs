@@ -54,9 +54,9 @@ network.to_lowercase =="mainnet"
 
 /// Return true if value is in the inclusive range 100..=200.
 pub fn is_in_range(value: i64) -> bool {
-    // TODO: Check if 100 <= value <= 200
-    todo!()
-}
+     //for value in 100..=200 true -> loops don’t return values
+     value>=100 &&  value<=200
+}//(100..=200).contains(&value) because the contains function expects a pointer
 
 /// Return true if both references point to the exact same object in memory.
 pub fn is_same_wallet<T>(wallet1: &T, wallet2: &T) -> bool {
