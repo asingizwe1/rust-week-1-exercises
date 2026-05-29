@@ -50,7 +50,7 @@ pub fn tx_priority(size_bytes: u64, fee_btc: f64) -> &'static str {
 /// Return true if the network string equals "mainnet" (case-insensitive).
 pub fn is_mainnet(network: &str) -> bool {
     //s = "mainnet" -> borrowed string slice (&str).
-    network.to_lowercase == "mainnet"
+    network.to_lowercase() == "mainnet"
 }
 
 /// Return true if value is in the inclusive range 100..=200.
@@ -88,7 +88,7 @@ pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
 
 /// Return basic wallet details as a tuple of (name, balance).
 pub fn get_wallet_details() -> (String, f64) {
-    ("Louis_wallet".to_string(), 12)
+    ("satoshi_wallet".to_string(), 50.0) //the float type has to be with a decimal
 }
 
 /// Get the status of a transaction from the mempool or "not found".
