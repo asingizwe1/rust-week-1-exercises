@@ -60,20 +60,20 @@ pub fn is_in_range(value: i64) -> bool {
 
 /// Return true if both references point to the exact same object in memory.
 pub fn is_same_wallet<T>(wallet1: &T, wallet2: &T) -> bool {
-    // TODO: Use std::ptr::eq to compare reference identity
-    todo!()
+  std::ptr::eq(wallet1,wallet2) //two raw pointers point to the exact same memory address.
 }
 
 /// Normalize a Bitcoin address by trimming whitespace and lowercasing.
 pub fn normalize_address(address: &str) -> String {
-    // TODO: Trim leading/trailing whitespace and convert to lowercase
-    todo!()
+  
+address.trim().to_lowercase()
+
 }
 
 /// Append a new UTXO to the list and return the updated list.
-pub fn add_utxo(utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {
-    // TODO: Push new_utxo into utxos and return it
-    todo!()
+pub fn add_utxo(mut utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {//adding mut to be able to modify
+utxos.push(new_utxo);
+utxos
 }
 
 /// Find the first transaction with a fee greater than 0.005 BTC.
